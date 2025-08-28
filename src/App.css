@@ -1,0 +1,138 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  
+  font-family: Arial, sans-serif;
+  background: url("https://www.transparenttextures.com/patterns/circuit-board.png"), #0f0f0f;
+  background-size: cover;
+  color: white;
+  background-attachment: fixed;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: rgba(20, 20, 20, 0.95);
+  border-bottom: 1px solid #00e676;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  width: 95vw;
+  
+}
+
+.nav-left {
+  font-size: 22px;
+  font-weight: bold;
+  color: #00e676;
+}
+
+.nav-right {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+.nav-link:hover {
+  color: #00e676;
+}
+
+/* Content */
+.content {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  gap: 20px;
+}
+
+.left-section , .right-section{
+  flex: 1;
+  background: rgba(30, 30, 30, 0.85);
+  padding: 20px;
+  border-radius: 10px;
+  height: 80vh;
+}
+
+/* Language select */
+.language-select {
+  margin-bottom: 10px;
+}
+.language-select select {
+  background: #111;
+  color: white;
+  border: 1px solid #00e676;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Code Editor */
+.code-editor {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Buttons */
+.review-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #00e676;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.review-btn:hover {
+  background: #00c853;
+}
+
+/* Right Section */
+.right-section h2 {
+  margin-top: 0;
+  color: #00e676;
+}
+
+.footer {
+  background: rgba(20, 20, 20, 0.7);
+  border-top: 1px solid rgba(0, 230, 118, 0.4);
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  color: #aaa;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.footer p {
+  margin: 0;
+  color: #00e676;
+}
+
+.autofix-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #00e676;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.autofix-btn:hover{
+  background: #00c853;
+
+}
+
