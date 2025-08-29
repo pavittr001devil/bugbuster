@@ -119,9 +119,8 @@ function App() {
       <nav className="navbar">
         <div className="nav-left">BugBuster</div>
         <div className="nav-right">
-          <Link to="/docs" className="nav-link">Documentation</Link>
-          <Link to="/signup" className="nav-link">Signup</Link>
-          <Link to="/login" className="nav-link">Login</Link>
+          
+
         </div>
       </nav>
 
