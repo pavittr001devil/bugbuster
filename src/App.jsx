@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import "prismjs/themes/prism-tomorrow.css";
 import Editor from "react-simple-code-editor";
 import Prism from "prismjs";
@@ -8,9 +8,9 @@ import "prismjs/components/prism-java";
 import Markdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom"; // ✅ removed extra BrowserRouter import
 import axios from "axios";
-import "./App.css"; // Optional if you still need custom CSS
+import "./App.css";
 
 function HomePage() {
   const [code, setCode] = useState("");
@@ -22,7 +22,8 @@ function HomePage() {
     Prism.highlightAll();
   }, [code, language]);
 
-  const reviewCode = async () => {
+  // --- Review Code ---
+  async function reviewCode() {
     try {
       const response = await axios.post("http://localhost:3000/ai/get-review", { code });
       setReview(response.data);
@@ -31,8 +32,9 @@ function HomePage() {
       console.error(err);
       alert("Review failed. Check backend logs.");
     }
-  };
+  }
 
+  // --- Auto Fix Code ---
   const handleAutoFix = async () => {
     try {
       const res = await axios.post("http://localhost:3000/ai/autofix", { code });
@@ -46,74 +48,62 @@ function HomePage() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 p-4">
+    <div className="content">
       {/* Left Section - Editor */}
-      <div className="flex-1 flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <label className="font-semibold">Select Language:</label>
-          <select
-            className="border rounded px-2 py-1"
-            onChange={(e) => setLanguage(e.target.value)}
-            value={language}
-          >
+      <div className="left-section">
+        <div className="language-select">
+          <label>Select Language: </label>
+          <select onChange={(e) => setLanguage(e.target.value)} value={language}>
             <option value="javascript">JavaScript</option>
             <option value="python">Python</option>
             <option value="java">Java</option>
           </select>
         </div>
 
-        <Editor
-          value={code}
-          onValueChange={setCode}
-          highlight={(code) => {
-            const grammar = Prism.languages[language] || Prism.languages.javascript;
-            return Prism.highlight(code, grammar, language);
-          }}
-          padding={10}
-          style={{
-            fontFamily: '"Fira Code", monospace',
-            fontSize: 16,
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            height: "300px",
-            width: "100%",
-            background: "#1e1e1e",
-            color: "#fff",
-            overflow: "auto",
-            whiteSpace: "pre-wrap",
-            wordWrap: "break-word",
-          }}
-        />
+        <div className="code-editor">
+          <Editor
+            value={code}
+            onValueChange={setCode}
+            highlight={(code) => {
+              const grammar = Prism.languages[language] || Prism.languages.javascript;
+              return Prism.highlight(code, grammar, language);
+            }}
+            padding={10}
+            style={{
+              fontFamily: '"Fira Code", monospace',
+              fontSize: 16,
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              height: "400px",
+              width: "100%",
+              background: "#1e1e1e",
+              color: "#fff",
+              overflow: "auto",
+              whiteSpace: "pre-wrap",
+              wordWrap: "break-word",
+              maxWidth: "100%",
+            }}
+          />
+        </div>
 
-        <div className="flex gap-2 flex-wrap">
-          <button
-            onClick={handleAutoFix}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-          >
-            Auto Fix
-          </button>
-          <button
-            onClick={reviewCode}
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
-          >
-            Review Code
-          </button>
+        <div className="buttons">
+          
+          <button onClick={handleAutoFix} className="autofix-btn">Auto Fix</button>
         </div>
       </div>
 
       {/* Right Section - Suggestions */}
-      <div className="flex-1 flex flex-col gap-4">
-        <h2 className="text-lg font-bold">AI Suggestions</h2>
-
+      <div className="right-section">
+        <h2>AI Suggestions</h2>
         {review && (
-          <div className="p-2 border rounded bg-gray-900 text-white overflow-auto max-h-64">
+          <div className="review-box">
+            
             <Markdown rehypePlugins={[rehypeHighlight]}>{review}</Markdown>
           </div>
         )}
-
         {fixedCode && (
-          <div className="p-2 border rounded bg-gray-900 text-white overflow-auto max-h-64">
-            <h3 className="font-semibold mb-2">Auto Fixed Code</h3>
+          <div className="autofix-box">
+            <h3>Auto Fixed Code</h3>
             <pre><code>{fixedCode}</code></pre>
           </div>
         )}
@@ -124,23 +114,28 @@ function HomePage() {
 
 function App() {
   return (
-    <main className="flex flex-col min-h-screen">
+    <main className="container">
       {/* Navbar */}
-      <nav className="flex justify-between items-center bg-gray-800 text-white px-4 py-2">
-        <div className="font-bold text-xl">BugBuster</div>
+      <nav className="navbar">
+        <div className="nav-left">BugBuster</div>
+        <div className="nav-right">
+          
+
+        </div>
       </nav>
 
-      {/* Routes */}
+      {/* Define Routes */}
       <Routes>
         <Route path="/" element={<HomePage />} />
+        {/* Add more routes here */}
       </Routes>
 
-      {/* Footer */}
-      <footer className="mt-auto bg-gray-800 text-white text-center py-2">
-        © {new Date().getFullYear()} BugBuster | Built with ❤️ by Pavittr
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} BugBuster | Built with ❤️ by Pavittr</p>
       </footer>
     </main>
   );
 }
 
 export default App;
+
